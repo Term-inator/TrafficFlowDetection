@@ -15,7 +15,7 @@ def parse_frame(frame, scene_name, labels_root):
     frame_num = frame_num.zfill(5)
     label_name = scene_name + '_img' + frame_num
 
-    img_root = './data/images/train/' if 'train' in labels_root else './data/images/test/'
+    img_root = './data/DETRAC/images/train/' if 'train' in labels_root else './data/DETRAC/images/test/'
     sample_img = os.listdir(img_root)
     if (label_name + '.jpg') in sample_img:
         label_path = os.path.join(labels_root, label_name + '.txt')
@@ -75,7 +75,7 @@ def create_labels(root_node, labels_root, thread_num=8):
 
 
 def yolo_img(params, mode='train'):
-    img_dir = f'./data/images/{mode}/'
+    img_dir = f'./data/DETRAC/images/{mode}/'
     if os.path.exists(img_dir):
         shutil.rmtree(img_dir)
     os.makedirs(img_dir)
@@ -95,7 +95,7 @@ def yolo_img(params, mode='train'):
 
 
 def yolo_label(params, mode='train', thread_num=8):
-    label_dir = f'./data/labels/{mode}/'
+    label_dir = f'./data/DETRAC/labels/{mode}/'
     if os.path.exists(label_dir):
         shutil.rmtree(label_dir)
     os.makedirs(label_dir)
@@ -118,7 +118,7 @@ def gen_yolo_dataset(params):
 
 
 def parse_params():
-    parser = argparse.ArgumentParser(prog='test.py')
+    parser = argparse.ArgumentParser(prog='process.py')
     parser.add_argument('--img_train', type=str, default='./data/DETRAC-train-data/Insight-MVT_Annotation_Train/', help='train images path')
     parser.add_argument('--img_test', type=str, default='./data/DETRAC-test-data/Insight-MVT_Annotation_Test/', help='test images path')
     parser.add_argument('--lbl_train', type=str, default='./data/DETRAC-Train-Annotations-XML/', help='train labels path')
