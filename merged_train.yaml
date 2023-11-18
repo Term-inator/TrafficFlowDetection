@@ -2,12 +2,12 @@ dataset_name: 'ua-detrac'
 
 # Train/val/test sets as 1) dir: path/to/imgs, 2) file: path/to/imgs.txt, or 3) list: [path/to/imgs1, path/to/imgs2, ..]
 path: ../data/  # dataset root dir
-train: DETRAC/images/train  # train images (relative to 'path') 4 images
-val: DETRAC/images/test  # val images (relative to 'path') 4 images
+train: Merged/images/train  # train images (relative to 'path') 4 images
+val: Merged/images/test  # val images (relative to 'path') 4 images
 #test:  # test images (optional)
 
 batch_size: 32  # effective batch size
-workers: 0  # number of CPU workers for dataloader
+num_workers: 0  # number of CPU workers for dataloader
 
 ## Keypoints
 #kpt_shape: [17, 3]  # number of keypoints, number of dims (2 for x,y or 3 for x,y,visible)
@@ -15,8 +15,11 @@ workers: 0  # number of CPU workers for dataloader
 
 # Classes dictionary
 names:
-  0: others
-  1: car
-  2: van
-  3: bus
+  0: Bus
+  1: MircoBus
+  2: MiniVan
+  3: Sedan
+  4: SUV
+  5: Truck
+  6: Others
 
