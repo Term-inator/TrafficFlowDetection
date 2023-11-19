@@ -160,6 +160,7 @@ cython_debug/
 .idea/
 data/
 runs/
+results/
 videos/
 *.pt
 !ultralytics/data

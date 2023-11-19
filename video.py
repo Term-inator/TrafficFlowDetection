@@ -17,7 +17,7 @@ def get_result(results):
     for i, box in enumerate(boxes.xyxy):
         box = box.to('cpu').numpy().astype(np.int32)
         cv2.rectangle(orig_img, (box[0], box[1]), (box[2], box[3]), (0, 255, 0), thickness=1)
-        cv2.putText(orig_img, str(cls[i]), (box[0], box[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1)
+        cv2.putText(orig_img, str(cls_dict[cls[i]]), (box[0], box[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1)
     return orig_img
 
 
@@ -37,7 +37,7 @@ def pic2video(pic_path, video_path, fps, predict_func):
 
 
 if __name__ == '__main__':
-    model = YOLO("./runs/detect/train/weights/best.pt")
+    model = YOLO("runs/detect/train/weights/best.pt")
     # model.eval()
 
     # img_path = "./data/DETRAC-train-data/Insight-MVT_Annotation_Train/MVI_20012/img00032.jpg"
