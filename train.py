@@ -3,13 +3,23 @@ import os
 from ultralytics import YOLO
 
 
-def model_factory(attention_type=None, conv_type=None, pretrained=True):
-    model = YOLO("yolov8n.yaml")
-    cfg_path = os.path.join('train_yaml', 'default.yaml')
+def model_factory(conv_type=None, attention_type=None, pretrained=True):
     data_path = os.path.join('train_yaml', 'train.yaml')
-    if attention_type == 'coord':
-        model = YOLO("models/coord.yaml")
-        cfg_path = os.path.join('train_yaml', 'coord_cfg.yaml')
+    if conv_type is None and attention_type is None:
+        model_path = 'yolov8n.yaml'
+        cfg_path = os.path.join('train_yaml', 'default.yaml')
+    else:
+        type_lst = []
+        if conv_type is not None:
+            type_lst.append(conv_type)
+        if attention_type is not None:
+            type_lst.append(attention_type)
+
+        filename = '_'.join(type_lst)
+        model_path = os.path.join('models', filename + '.yaml')
+        cfg_path = os.path.join('train_yaml', filename + '_cfg.yaml')
+
+    model = YOLO(model_path)
 
     if pretrained:
         model.load("yolov8n.pt")
@@ -18,7 +28,7 @@ def model_factory(attention_type=None, conv_type=None, pretrained=True):
 
 
 if __name__ == '__main__':
-    model, cfg_path, data_path = model_factory(pretrained=True)
+    model, cfg_path, data_path = model_factory(conv_type=None, attention_type='coord', pretrained=True)
     print(cfg_path, data_path)
     # Use the model
     model.train(cfg=cfg_path, data=data_path, epochs=50)  # the model
