@@ -210,6 +210,14 @@ class C2f(nn.Module):
         return self.cv2(torch.cat(y, 1))
 
 
+class C2fTR(C2f):
+    """C2f module with TransformerBlock()."""
+
+    def __init__(self, c1, c2, n=1, shortcut=False, g=1, e=0.5):
+        super().__init__(c1, c2, n, shortcut, g, e)
+        self.m = nn.ModuleList(TransformerBlock(self.c, self.c, 4, n) for _ in range(n))
+
+
 class C3(nn.Module):
     """CSP Bottleneck with 3 convolutions."""
 

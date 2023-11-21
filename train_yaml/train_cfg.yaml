@@ -1,2 +1,2 @@
-batch: 32  # effective batch size
+batch: 16  # effective batch size
 patience: 5
