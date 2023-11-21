@@ -20,7 +20,7 @@ class InceptionDWConv2d(nn.Module):
     """ Inception depthweise convolution
     """
 
-    def __init__(self, in_channels, square_kernel_size=3, band_kernel_size=11, branch_ratio=0.125):
+    def __init__(self, c1, in_channels, square_kernel_size=3, band_kernel_size=11, branch_ratio=0.125):
         super().__init__()
 
         gc = int(in_channels * branch_ratio)  # channel numbers of a convolution branch
@@ -140,7 +140,7 @@ class MetaNeXtStage(nn.Module):
             ls_init_value=1.0,
             token_mixer=nn.Identity,
             act_layer=nn.GELU,
-            norm_layer=nn.BatchNorm2d,
+            norm_layer=None,
             mlp_ratio=4,
     ):
         super().__init__()
@@ -213,8 +213,6 @@ class MetaNeXt(nn.Module):
             **kwargs,
     ):
         super().__init__()
-
-        print('args:', in_chans, num_classes, depths, dims, token_mixers, norm_layer, act_layer, mlp_ratios, head_fn, drop_rate, drop_path_rate, ls_init_value, kwargs)
 
         num_stage = len(depths)
         if not isinstance(token_mixers, (list, tuple)):
@@ -294,3 +292,76 @@ def _cfg(url='', **kwargs):
         **kwargs
     }
 
+
+default_cfgs = dict(
+    inceptionnext_tiny=_cfg(
+        url='https://github.com/sail-sg/inceptionnext/releases/download/model/inceptionnext_tiny.pth',
+    ),
+    inceptionnext_small=_cfg(
+        url='https://github.com/sail-sg/inceptionnext/releases/download/model/inceptionnext_small.pth',
+    ),
+    inceptionnext_base=_cfg(
+        url='https://github.com/sail-sg/inceptionnext/releases/download/model/inceptionnext_base.pth',
+    ),
+    inceptionnext_base_384=_cfg(
+        url='https://github.com/sail-sg/inceptionnext/releases/download/model/inceptionnext_base_384.pth',
+        input_size=(3, 384, 384), crop_pct=1.0,
+    ),
+)
+
+
+@register_model
+def inceptionnext_tiny(pretrained=False, **kwargs):
+    model = MetaNeXt(depths=(3, 3, 9, 3), dims=(96, 192, 384, 768),
+                     token_mixers=InceptionDWConv2d,
+                     **kwargs
+                     )
+    model.default_cfg = default_cfgs['inceptionnext_tiny']
+    if pretrained:
+        state_dict = torch.hub.load_state_dict_from_url(
+            url=model.default_cfg['url'], map_location="cpu", check_hash=True)
+        model.load_state_dict(state_dict)
+    return model
+
+
+@register_model
+def inceptionnext_small(pretrained=False, **kwargs):
+    model = MetaNeXt(depths=(3, 3, 27, 3), dims=(96, 192, 384, 768),
+                     token_mixers=InceptionDWConv2d,
+                     **kwargs
+                     )
+    model.default_cfg = default_cfgs['inceptionnext_small']
+    if pretrained:
+        state_dict = torch.hub.load_state_dict_from_url(
+            url=model.default_cfg['url'], map_location="cpu", check_hash=True)
+        model.load_state_dict(state_dict)
+    return model
+
+
+@register_model
+def inceptionnext_base(pretrained=False, **kwargs):
+    model = MetaNeXt(depths=(3, 3, 27, 3), dims=(128, 256, 512, 1024),
+                     token_mixers=InceptionDWConv2d,
+                     **kwargs
+                     )
+    model.default_cfg = default_cfgs['inceptionnext_base']
+    if pretrained:
+        state_dict = torch.hub.load_state_dict_from_url(
+            url=model.default_cfg['url'], map_location="cpu", check_hash=True)
+        model.load_state_dict(state_dict)
+    return model
+
+
+@register_model
+def inceptionnext_base_384(pretrained=False, **kwargs):
+    model = MetaNeXt(depths=[3, 3, 27, 3], dims=[128, 256, 512, 1024],
+                     mlp_ratios=[4, 4, 4, 3],
+                     token_mixers=InceptionDWConv2d,
+                     **kwargs
+                     )
+    model.default_cfg = default_cfgs['inceptionnext_base_384']
+    if pretrained:
+        state_dict = torch.hub.load_state_dict_from_url(
+            url=model.default_cfg['url'], map_location="cpu", check_hash=True)
+        model.load_state_dict(state_dict)
+    return model

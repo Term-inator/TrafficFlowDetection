@@ -130,7 +130,7 @@ def parse_params():
 
 if __name__ == "__main__":
     params = parse_params()
-    params.sample = 0.1
+    params.sample = 0.025
     gen_yolo_dataset(params)
 
 

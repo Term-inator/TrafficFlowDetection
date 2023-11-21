@@ -5,9 +5,7 @@ path: ../data/  # dataset root dir
 train: DETRAC/images/train  # train images (relative to 'path') 4 images
 val: DETRAC/images/test  # val images (relative to 'path') 4 images
 #test:  # test images (optional)
-
-batch_size: 32  # effective batch size
-workers: 0  # number of CPU workers for dataloader
+drop_last: True  # drop last batch size if dataloader returns less than batch size
 
 ## Keypoints
 #kpt_shape: [17, 3]  # number of keypoints, number of dims (2 for x,y or 3 for x,y,visible)
