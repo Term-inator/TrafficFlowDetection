@@ -27,6 +27,7 @@ from .transformer import (AIFI, MLP, DeformableTransformerDecoder, DeformableTra
 from .coord_attention import CoordAtt
 # from .dual_attention import DualAttention
 from .inceptionnext import MetaNeXt, MetaNeXtStage, InceptionDWConv2d
+from .convnext import ConvNeXtBlock, ConvNeXt
 
 __all__ = ('Conv', 'Conv2', 'LightConv', 'RepConv', 'DWConv', 'DWConvTranspose2d', 'ConvTranspose', 'Focus',
            'GhostConv', 'ChannelAttention', 'SpatialAttention', 'CBAM', 'Concat', 'TransformerLayer',
