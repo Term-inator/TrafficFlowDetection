@@ -28,7 +28,7 @@ def model_factory(conv_type=None, attention_type=None, pretrained=True):
 
 
 if __name__ == '__main__':
-    model, cfg_path, data_path = model_factory(conv_type='transformer', attention_type=None, pretrained=False)
+    model, cfg_path, data_path = model_factory(conv_type='transformer', attention_type='coord', pretrained=False)
     print(cfg_path, data_path)
     # Use the model
     model.train(cfg=cfg_path, data=data_path, epochs=100)  # the model
