@@ -19,7 +19,7 @@ Example:
 
 from .block import (C1, C2, C3, C3TR, DFL, SPP, SPPF, Bottleneck, BottleneckCSP, C2f, C3Ghost, C3x, GhostBottleneck,
                     HGBlock, HGStem, Proto, RepC3,
-                    C2fTR)
+                    C2fTR, C2fST)
 from .conv import (CBAM, ChannelAttention, Concat, Conv, Conv2, ConvTranspose, DWConv, DWConvTranspose2d, Focus,
                    GhostConv, LightConv, RepConv, SpatialAttention)
 from .head import Classify, Detect, Pose, RTDETRDecoder, Segment
@@ -29,6 +29,7 @@ from .coord_attention import CoordAtt
 # from .dual_attention import DualAttention
 from .inceptionnext import MetaNeXt, MetaNeXtStage, InceptionDWConv2d
 from .convnext import ConvNeXtBlock, ConvNeXt
+from .swin_transformer import SwinTransformerBlock
 
 __all__ = ('Conv', 'Conv2', 'LightConv', 'RepConv', 'DWConv', 'DWConvTranspose2d', 'ConvTranspose', 'Focus',
            'GhostConv', 'ChannelAttention', 'SpatialAttention', 'CBAM', 'Concat', 'TransformerLayer',

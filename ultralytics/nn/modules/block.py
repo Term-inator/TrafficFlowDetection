@@ -6,6 +6,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from .conv import Conv, DWConv, GhostConv, LightConv, RepConv
+from .swin_transformer import SwinTransformer2Block, SwinTransformerBlock
 from .transformer import TransformerBlock
 
 __all__ = ('DFL', 'HGBlock', 'HGStem', 'SPP', 'SPPF', 'C1', 'C2', 'C3', 'C2f', 'C3x', 'C3TR', 'C3Ghost',
@@ -216,6 +217,15 @@ class C2fTR(C2f):
     def __init__(self, c1, c2, n=1, shortcut=False, g=1, e=0.5):
         super().__init__(c1, c2, n, shortcut, g, e)
         self.m = nn.ModuleList(TransformerBlock(self.c, self.c, 4, n) for _ in range(n))
+
+
+class C2fST(C2f):
+    """C2f module with Swin TransformerBlock()."""
+
+    def __init__(self, c1, c2, n=1, shortcut=False, g=1, e=0.5):
+        super().__init__(c1, c2, n, shortcut, g, e)
+        num_heads = self.c // 32
+        self.m = nn.ModuleList(SwinTransformerBlock(self.c, self.c, num_heads, n) for _ in range(n))
 
 
 class C3(nn.Module):
