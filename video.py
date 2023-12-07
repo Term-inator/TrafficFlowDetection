@@ -37,7 +37,7 @@ def pic2video(pic_path, video_path, fps, predict_func):
 
 
 if __name__ == '__main__':
-    model = YOLO("runs/detect/train7/weights/best.pt")
+    model = YOLO("runs/detect/train31/weights/best.pt")
     # model.eval()
 
     # img_path = "./data/DETRAC-train-data/Insight-MVT_Annotation_Train/MVI_20012/img00032.jpg"

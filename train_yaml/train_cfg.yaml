@@ -1,2 +1,1 @@
 batch: 16  # effective batch size
-patience: 5
