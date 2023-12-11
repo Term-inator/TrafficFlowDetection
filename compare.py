@@ -22,7 +22,7 @@ if __name__ == '__main__':
     # boxes = results[0].boxes
     # get_result(origin_img, boxes)
 
-    test_case = 'MVI_40743'
+    test_case = 'MVI_40793'
     pic_path = f"./data/DETRAC-test-data/Insight-MVT_Annotation_Test/{test_case}/"
 
     for img in os.listdir(pic_path):
@@ -42,5 +42,5 @@ if __name__ == '__main__':
         if dhash_ori - dhash_opt > 5:
             print(f"content not equal: {img_path}")
             # save img
-            cv2.imwrite(f"./videos/{img[:img.rfind('.')]}_ori.jpg", results_ori_plot)
-            cv2.imwrite(f"./videos/{img[:img.rfind('.')]}_opt.jpg", results_opt_plot)
+            cv2.imwrite(f"./videos/{test_case}_{img[:img.rfind('.')]}_ori.jpg", results_ori_plot)
+            cv2.imwrite(f"./videos/{test_case}_{img[:img.rfind('.')]}_opt.jpg", results_opt_plot)
